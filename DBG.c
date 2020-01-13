@@ -25,7 +25,6 @@ void _putchar(char character)
 
 void DBG_init(void)
 {
-	init_printf(NULL, stdout_putf);
 }
 
 void DBG_clear_screen(void)
@@ -39,36 +38,10 @@ void DBG_println(const char *fmt, ...)
 	char buffer[1024] = "";
 	va_list args;
 	va_start(args, fmt);
-	vprintf(buffer, sizeof(buffer), fmt, args);
+	vprintf(buffer, args);
 	va_end(args);
 
 	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\n", strlen("\r\n"), 250);
-}
-
-void DBG_log_info(const char *fmt, ...)
-{
-	char buffer[300] = "";
-	va_list args;
-	va_start(args, fmt);
-	tfp_vsprintf(buffer, fmt, args);
-	va_end(args);
-
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\nINFO: ", strlen("\r\nINFO: "), 250);
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) buffer, strlen(buffer), 250);
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\n\r\n", strlen("\r\n\r\n"), 250);
-}
-
-void DBG_log_error(const char *fmt, ...)
-{
-	char buffer[300] = "";
-	va_list args;
-	va_start(args, fmt);
-	tfp_vsprintf(buffer, fmt, args);
-	va_end(args);
-
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\nERROR: ", strlen("\r\nERROR: "), 250);
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) buffer, strlen(buffer), 250);
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\n\r\n", strlen("\r\n\r\n"), 250);
 }
 
 /**

@@ -68,10 +68,6 @@ extern "C" {
 void DBG_init(void);
 void DBG_clear_screen(void);
 void DBG_println(const char *fmt, ...);
-
-void DBG_log_info(const char *fmt, ...);
-void DBG_log_error(const char *fmt, ...);
-
 void DBG_hexdump(uint8_t *buff, size_t len, size_t base);
 
 #ifdef __cplusplus
