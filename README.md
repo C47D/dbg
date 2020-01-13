@@ -17,6 +17,17 @@ el contenido de `_putchar` con la funcion que se encarga de enviar caracteres po
 git clone --recurse-submodules https://gitlab.com/mtx_ing6/dbg.git DBG
 ```
 
+## Agregar como submodulo
+
+Para agregar la librería como submodulo (estando en la raiz de tu directorio):
+```
+$ git submodule add https://gitlab.com/mtx_ing6/dbg.git DBG
+$ cd DBG
+$ git submodule init
+$ git submodule update
+```
+Estos ultimos comandos son para actualizar la librería [printf](https://github.com/mpaland/printf).
+
 2. Agrega las carpetas `DBG`, `hexdump` y `printf` al path de busqueda de tu proyecto.
 3. Clic derecho en la carpeta del directorio, selecciona New y luego Source Folder.
 
