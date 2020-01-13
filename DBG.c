@@ -12,12 +12,6 @@
 #include "printf.h"
 #include "hexdump.h"
 
-static void stdout_putf(void *unused, char c)
-{
-	(void) unused;
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) &c, 1, 250);
-}
-
 void _putchar(char character)
 {
     HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) &character, 1, 250);
@@ -35,10 +29,9 @@ void DBG_clear_screen(void)
 
 void DBG_println(const char *fmt, ...)
 {
-	char buffer[1024] = "";
 	va_list args;
 	va_start(args, fmt);
-	vprintf(buffer, args);
+	vprintf(fmt, args);
 	va_end(args);
 
 	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\n", strlen("\r\n"), 250);
