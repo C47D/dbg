@@ -74,10 +74,6 @@ void DBG_log_error(const char *fmt, ...);
 
 void DBG_hexdump(uint8_t *buff, size_t len, size_t base);
 
-void DBG_led_set(GPIO_TypeDef *pin_port, uint32_t pin);
-void DBG_led_clear(GPIO_TypeDef *pin_port, uint32_t pin);
-void DBG_led_toggle(GPIO_TypeDef *pin_port, uint32_t pin);
-
 #ifdef __cplusplus
 }
 #endif

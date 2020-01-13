@@ -93,18 +93,3 @@ void DBG_hexdump(uint8_t *buff, size_t len, size_t base)
 	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\n", strlen("\r\n"), 250);
 }
 
-void DBG_led_set(GPIO_TypeDef *pin_port, uint32_t pin)
-{
-	HAL_GPIO_WritePin(pin_port, pin, GPIO_PIN_RESET);
-}
-
-void DBG_led_clear(GPIO_TypeDef *pin_port, uint32_t pin)
-{
-	HAL_GPIO_WritePin(pin_port, pin, GPIO_PIN_SET);
-}
-
-void DBG_led_toggle(GPIO_TypeDef *pin_port, uint32_t pin)
-{
-	HAL_GPIO_TogglePin(pin_port, pin);
-}
-
