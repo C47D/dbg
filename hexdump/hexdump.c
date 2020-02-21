@@ -2,7 +2,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "usart.h"
 #include "hexdump.h"
 
 #include "DBG.h"
@@ -19,16 +18,11 @@ static void PrintHex(const uint8_t val)
 {
     const uint8_t digits = sizeof(uint8_t) << 1;
     uint8_t i = 0;
-    char dummy[10];
-    memset(dummy, '\0', sizeof(dummy));
     
     while (i < digits) {
         // Each nibble stores 1 digit
         uint8_t v = (val >> ((digits - i - 1) << 2)) & 0x0F;
-        sprintf(dummy, "%X", v);
-        //UART_PutString(dumb_str);
-        HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) dummy, strlen(dummy), 250);
-        memset(dummy, '\0', sizeof(dummy));
+        DBG_print("%X", v)
         ++i;
     }
 }
@@ -37,16 +31,11 @@ static void PrintDir(const uint16_t val)
 {
     const uint8_t digits = sizeof(uint16_t) << 1;
     uint8_t i = 0;
-    char dummy[10];
-    memset(dummy, '\0', sizeof(dummy));
     
     while (i < digits) {
         // Each nibble stores 1 digit
         uint8_t v = (val >> ((digits - i - 1) << 2)) & 0x0F;
-        sprintf(dummy, "%X", v);
-        //UART_PutString(dumb_str);
-        HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) dummy, strlen(dummy), 250);
-        memset(dummy, '\0', sizeof(dummy));
+        DBG_print("%X", v);
         ++i;
     }
 }
@@ -71,7 +60,7 @@ void HexDump(uint8_t *buff, size_t len, size_t base)
     for (size_t r = 0; r < rows; ++r) {
         // imprime las direcciones
         PrintDir(base + p - buff);
-        HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) ": ", 3, 250);
+        DBG_print(": ");
 
         char *pc = (char *) p;
         const size_t cols = len < bytesPerRow ? len : bytesPerRow;
@@ -81,25 +70,25 @@ void HexDump(uint8_t *buff, size_t len, size_t base)
             if (c < cols) {
                 PrintHex(*p++);
             } else {
-                HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "  ", 3, 250);
+                DBG_print("  ");
             }
             
-            HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) " ", 2, 250);
+            DBG_print(" ");
         }
         
-        HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) " |", 3, 250);
+        DBG_print(" |");
         
         // impresion de ascii
         for (size_t i = 0; i < cols; ++i) {
             char c = *pc++;
             if (isgraph(c)) {
-                HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) &c, 1, 250);
+                DBG_print(&c);
             } else {
-                HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) ".", 2, 250);
+                DBG_print(".");
             }
         }
         
-        HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "|\r\n", 4, 250);
+        DBG_print("|\r\n");
         len -= bytesPerRow;
     }
 }
