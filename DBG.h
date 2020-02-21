@@ -17,6 +17,7 @@ extern "C" {
 #include <stdarg.h>
 
 #define DEBUG_ENABLE 			1
+#define BOOL_PARAM(param)   (param ? '1' : '0')
 
 void DBG_init(void *handle);
 void DBG_clear_screen(void);
