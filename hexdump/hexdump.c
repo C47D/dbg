@@ -22,7 +22,7 @@ static void PrintHex(const uint8_t val)
     while (i < digits) {
         // Each nibble stores 1 digit
         uint8_t v = (val >> ((digits - i - 1) << 2)) & 0x0F;
-        DBG_print("%X", v)
+        DBG_print("%X", v);
         ++i;
     }
 }
