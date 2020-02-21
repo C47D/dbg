@@ -12,19 +12,24 @@
 #include "printf.h"
 #include "hexdump.h"
 
+#include "usart.h"
+
+static UART_HandleTypeDef *DBG_UART_PORT = NULL;
+
 void _putchar(char character)
 {
-    HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) &character, 1, 250);
+    HAL_UART_Transmit(DBG_UART_PORT, (uint8_t *) &character, 1, 250);
 }
 
-void DBG_init(void)
+void DBG_init(void *handle)
 {
+    DBG_UART_PORT = (UART_HandleTypeDef *) handle;
 }
 
 void DBG_clear_screen(void)
 {
 	uint8_t clear_page = 0x0C;
-	HAL_UART_Transmit(&DBG_UART_PORT, &clear_page, 1, 250);
+	HAL_UART_Transmit(DBG_UART_PORT, &clear_page, 1, 250);
 }
 
 void DBG_println(const char *fmt, ...)
@@ -34,7 +39,15 @@ void DBG_println(const char *fmt, ...)
 	vprintf(fmt, args);
 	va_end(args);
 
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\n", strlen("\r\n"), 250);
+	HAL_UART_Transmit(DBG_UART_PORT, (uint8_t *) "\r\n", strlen("\r\n"), 250);
+}
+
+void DBG_print(const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	vprintf(fmt, args);
+	va_end(args);
 }
 
 /**
@@ -53,9 +66,9 @@ void DBG_hexdump(uint8_t *buff, size_t len, size_t base)
 	char *header = "\r\n      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\r\n";
 	char *header_sep = "      -----------------------------------------------\r\n";
 
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) header, strlen(header), 250);
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) header_sep, strlen(header_sep), 250);
+        DBG_print(header);
+        DBG_print(header_sep);
 	HexDump(buff, len, base);
-	HAL_UART_Transmit(&DBG_UART_PORT, (uint8_t *) "\r\n", strlen("\r\n"), 250);
+        DBG_print("\r\n");
 }
 
