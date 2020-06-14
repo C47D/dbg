@@ -1,10 +1,3 @@
-/*
- * DBG.c
- *
- *  Created on: 08/08/2018
- *      Author: Ingenieria6
- */
-
 #include <string.h>
 
 #include "DBG.h"

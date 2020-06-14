@@ -1,10 +1,3 @@
-/*
- * DBG.h
- *
- *  Created on: 08/08/2018
- *      Author: Ingenieria6
- */
-
 #ifndef DBG_H_
 #define DBG_H_
 
