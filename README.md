@@ -14,15 +14,21 @@ el contenido de `_putchar` con la funcion que se encarga de enviar caracteres po
 
 1. Clona este repositorio en tu proyecto:
 ```
-git clone --recurse-submodules https://gitlab.com/mtx_ing6/dbg.git DBG
+git clone --recurse-submodules https://github.com/C47D/dbg.git
+```
+
+2. Entra al directorio `dbg` y actualiza los submodulos
+```
+cd dbg
+git submodule update --init --recursive
 ```
 
 ## Agregar como submodulo
 
 Para agregar la librería como submodulo (estando en la raiz de tu directorio):
 ```
-$ git submodule add https://gitlab.com/mtx_ing6/dbg.git DBG
-$ cd DBG
+$ git submodule add https://github.com/C47D/dbg.git
+$ cd dbg
 $ git submodule init
 $ git submodule update
 ```
