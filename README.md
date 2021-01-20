@@ -32,15 +32,3 @@ $ cd dbg
 $ git submodule init
 $ git submodule update
 ```
-Estos ultimos comandos son para actualizar la librería [printf](https://github.com/mpaland/printf).
-
-2. Agrega las carpetas `DBG`, `hexdump` y `printf` al path de busqueda de tu proyecto.
-3. Clic derecho en la carpeta del directorio, selecciona New y luego Source Folder.
-
-![How to add a new source folder](img/add_source_dir.png)
-
-4. Incluye `DBG.h` donde vayas a utilizar las funciones de la libreria.
-5. Abre `DBG.h` y asigna el handler de la UART a utilizar al simbolo DBG_UART_PORT, por ejemplo:
-```
-#define DBG_UART_PORT	huart1
-```
